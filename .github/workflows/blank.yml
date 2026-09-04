@@ -11,9 +11,9 @@ jobs:
 
       - name: Check file existence
         id: check_files
-        uses: thebinaryfelix/check-file-existence-action@v1
+        uses: thebinaryfelix/check-file-existence-action@2.0.0
         with:
-          files: 'API Endopoint plan.pdf, ERD.drawio.png, RacedayDB.sql'
+          files: 'API Endpoint plan.pdf, ERD.drawio.png, RacedayDB.sql'
 
       - name: Files exist
         if: steps.check_files.outputs.exists == 'true'
