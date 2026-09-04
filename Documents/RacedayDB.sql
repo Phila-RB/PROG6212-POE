@@ -35,10 +35,16 @@
 --CategoryID INT FOREIGN KEY REFERENCES Category(CategoryID)
 --);
 
-CREATE TABLE ParticipantResults(
-PRID INT IDENTITY(1,1)  NOT NULL PRIMARY KEY,
-ParticipantID INT FOREIGN KEY REFERENCES Participant(ParticipantID),
-EventID INT FOREIGN KEY REFERENCES Event(EventID),
-Placement INT NOT NULL,
-Time TIME NOT NULL
-);
+--CREATE TABLE ParticipantResults(
+--PRID INT IDENTITY(1,1)  NOT NULL PRIMARY KEY,
+--ParticipantID INT FOREIGN KEY REFERENCES Participant(ParticipantID),
+--EventID INT FOREIGN KEY REFERENCES Event(EventID),
+--Placement INT NOT NULL,
+--Time TIME NOT NULL
+--);
+INSERT INTO Users (Name, Surname, Access, Password) 
+VALUES ('Thabo', 'Mokoena', 'Organiser', 'Thabo123'),
+('Lerato', 'Dlamini', 'Organiser', 'Lerato123'),
+('James', 'Nkosi', 'Participant', 'James123'),
+('Amy', 'Pillay', 'Participant', 'Amy123');
+
