@@ -50,8 +50,10 @@
 
 --INSERT INTO Category (CategoryName) VALUES ('5km'), ('10km'), ('21km'), ('42km'), ('60+');
 
-INSERT INTO Event (CategoryID, EventName, Location, Description, Date, Type) VALUES 
-(4, 'Johannesburg Marathon', 'Johannesburg', 'Annual city marathon', '2026-10-18', 'Running'), 
-(2, 'Joburg Cycle Challenge', 'Johannesburg', 'Road cycling challenge', '2026-11-08', 'Cycling'), 
-(1, 'Pretoria Charity Walk', 'Pretoria', 'Community charity walk', '2026-11-22', 'Walking');
+--INSERT INTO Event (CategoryID, EventName, Location, Description, Date, Type) VALUES 
+--(4, 'Johannesburg Marathon', 'Johannesburg', 'Annual city marathon', '2026-10-18', 'Running'), 
+--(2, 'Joburg Cycle Challenge', 'Johannesburg', 'Road cycling challenge', '2026-11-08', 'Cycling'), 
+--(1, 'Pretoria Charity Walk', 'Pretoria', 'Community charity walk', '2026-11-22', 'Walking');
+
+INSERT INTO Participant (UserID) VALUES (3), (4);
 
