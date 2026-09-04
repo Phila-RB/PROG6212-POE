@@ -55,5 +55,10 @@
 --(2, 'Joburg Cycle Challenge', 'Johannesburg', 'Road cycling challenge', '2026-11-08', 'Cycling'), 
 --(1, 'Pretoria Charity Walk', 'Pretoria', 'Community charity walk', '2026-11-22', 'Walking');
 
-INSERT INTO Participant (UserID) VALUES (3), (4);
+--INSERT INTO Participant (UserID) VALUES (3), (4);
+
+INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES
+(1, 1, 4), (1, 2, 4),
+(2, 1, 2), (2, 2, 2), 
+(3, 1, 1), (3, 2, 1);
 
