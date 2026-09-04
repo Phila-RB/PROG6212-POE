@@ -57,8 +57,12 @@
 
 --INSERT INTO Participant (UserID) VALUES (3), (4);
 
-INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES
-(1, 1, 4), (1, 2, 4),
-(2, 1, 2), (2, 2, 2), 
-(3, 1, 1), (3, 2, 1);
+--INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES
+--(1, 1, 4), (1, 2, 4),
+--(2, 1, 2), (2, 2, 2), 
+--(3, 1, 1), (3, 2, 1);
 
+INSERT INTO ParticipantResults (ParticipantID, EventID, Placement, Time) VALUES 
+(1, 1, 1, '03:42:18'), (2, 1, 2, '04:05:32'), 
+(1, 2, 2, '02:15:45'), (2, 2, 1, '02:08:21'),
+(1, 3, 1, '00:52:14'), (2, 3, 2, '00:55:37');
