@@ -1,0 +1,21 @@
+name: 'Check File Existence'
+
+on: [push, pull_request]
+
+jobs:
+  check_file_existence:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check file existence
+        id: check_files
+        uses: thebinaryfelix/check-file-existence-action@vX.X.X # check the latest release
+        with:
+          files: 'API Endopoint plan.pdf, ERD.drawio.png, RacedayDB.sql'
+
+      - name: Files exist
+        if: steps.check_files.outputs.exists == 'true'
+        # Only runs if all of the files exist
+        run: echo "All files exist!"
