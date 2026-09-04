@@ -42,9 +42,11 @@
 --Placement INT NOT NULL,
 --Time TIME NOT NULL
 --);
-INSERT INTO Users (Name, Surname, Access, Password) 
-VALUES ('Thabo', 'Mokoena', 'Organiser', 'Thabo123'),
-('Lerato', 'Dlamini', 'Organiser', 'Lerato123'),
-('James', 'Nkosi', 'Participant', 'James123'),
-('Amy', 'Pillay', 'Participant', 'Amy123');
+--INSERT INTO Users (Name, Surname, Access, Password) 
+--VALUES ('Thabo', 'Mokoena', 'Organiser', 'Thabo123'),
+--('Lerato', 'Dlamini', 'Organiser', 'Lerato123'),
+--('James', 'Nkosi', 'Participant', 'James123'),
+--('Amy', 'Pillay', 'Participant', 'Amy123');
+
+INSERT INTO Category (CategoryName) VALUES ('5km'), ('10km'), ('21km'), ('42km'), ('60+');
 
