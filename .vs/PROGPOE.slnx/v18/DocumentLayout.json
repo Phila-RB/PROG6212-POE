@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\phila\\source\\repos\\ProgPoe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\participantresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\participantresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\signup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\signup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,6 +47,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ParticipantResults.cs",
+              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\ParticipantResults.cs",
+              "RelativeDocumentMoniker": "PROGPOE\\Models\\ParticipantResults.cs",
+              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\ParticipantResults.cs",
+              "RelativeToolTip": "PROGPOE\\Models\\ParticipantResults.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T15:05:59.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Signup.cs",
+              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Signup.cs",
+              "RelativeDocumentMoniker": "PROGPOE\\Models\\Signup.cs",
+              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Signup.cs",
+              "RelativeToolTip": "PROGPOE\\Models\\Signup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T15:05:46.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Participant.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Participant.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\Participant.cs",
@@ -52,19 +86,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Event.cs",
-              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Event.cs",
-              "RelativeDocumentMoniker": "PROGPOE\\Models\\Event.cs",
-              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Event.cs",
-              "RelativeToolTip": "PROGPOE\\Models\\Event.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-12T15:01:01.979Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\User.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\User.cs",
@@ -77,7 +98,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Event.cs",
+              "RelativeDocumentMoniker": "PROGPOE\\Models\\Event.cs",
+              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Event.cs",
+              "RelativeToolTip": "PROGPOE\\Models\\Event.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T15:01:01.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Category.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Category.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\Category.cs",
@@ -85,8 +119,7 @@
               "RelativeToolTip": "PROGPOE\\Models\\Category.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-12T14:57:31.417Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-12T14:57:31.417Z"
             }
           ]
         }
