@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PROGPOE.Models;
 using System.Data;
 using System.Data.SqlTypes;
+using System.Security.Claims;
 namespace PROGPOE.Controllers
 {
     [Route("api/[controller]")]
@@ -13,14 +18,13 @@ namespace PROGPOE.Controllers
     public class UserController : ControllerBase
     {
         private readonly IConfiguration _config;
-        //private readonly User loggedIn = new User();
-        private readonly User loggedIn = new() {UserID = 3, Name = "Thabo", Surname = "Mokoena", Access = "Organiser", Password = "******" };
-
+        List<Claim> claims;
         public UserController(IConfiguration config)
         {
             _config = config;
         }
 
+        [Authorize(Roles ="Organiser,Participant")]
         [HttpGet]
         [Route("auth/profile/{id:int}")]
         public IActionResult GetProfile(int id)
@@ -65,29 +69,30 @@ namespace PROGPOE.Controllers
         
         [HttpPost]
         [Route("/auth/login")]
-        public IActionResult GetUser(string name, string surname, string password)
+        public async Task<IActionResult> GetUser(string name, string surname, string password)
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT * FROM Users WHERE Name = {name} AND Surname = {surname} AND Password = {password}";
+            string query = $"SELECT UserID, Name, Surname, Access FROM Users WHERE Name = '{name}' AND Surname = '{surname}' AND Password = '{password}'";
             using SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             dap.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                loggedIn.UserID = Convert.ToInt32(dt.Rows[0]["UserID"]);
-                loggedIn.Name = Convert.ToString(dt.Rows[0]["Name"]);
-                loggedIn.Surname = Convert.ToString(dt.Rows[0]["Surname"]);
-                loggedIn.Access = Convert.ToString(dt.Rows[0]["Access"]);
-                loggedIn.Password = "*****************";
+                // 2. Create user identity claims
+                claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // 3. Issue the session cookie
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
                 return Ok("logged in");
             }
             return NotFound();
         }
 
+        [Authorize(Roles = "Organiser,Participant")]
         [HttpPut]
         [Route("auth/profile")]
-
         public IActionResult UpdateProfile(User userUpd)
         {
             if (userUpd == null)
@@ -95,18 +100,18 @@ namespace PROGPOE.Controllers
                 return NotFound();
             }
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT * FROM Users WHERE UserID = {loggedIn.UserID}";
+            string query = $"SELECT * FROM Users WHERE UserID = {Convert.ToInt32(claims[0])}";
             SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             dap.Fill(dt);
             using SqlCommand cmd = new SqlCommand("UPDATE Users SET Name = @NAME, Surname = @Surname, Access = @ACCESS, Password = @Password WHERE UserId = @ID", con);
 
-            string name = (String.IsNullOrEmpty(userUpd.Name))?loggedIn.Name : userUpd.Name;
-            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? loggedIn.Surname : userUpd.Surname;
-            string access = (String.IsNullOrEmpty(userUpd.Access)) ? loggedIn.Access : userUpd.Access;
+            string name = (String.IsNullOrEmpty(userUpd.Name))? claims[1].ToString() : userUpd.Name;
+            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? claims[2].ToString() : userUpd.Surname;
+            string access = (String.IsNullOrEmpty(userUpd.Access)) ? claims[3].ToString() : userUpd.Access;
             string password = (String.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
 
-            cmd.Parameters.AddWithValue("@ID", loggedIn.UserID);
+            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(claims[0]));
             cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@Surname", surname);
             cmd.Parameters.AddWithValue("@Access", access);
@@ -118,6 +123,7 @@ namespace PROGPOE.Controllers
             return CreatedAtAction(nameof(GetProfile), new { id = userUpd.UserID }, userUpd);
         }
 
+        [Authorize(Roles = "Participant")]
         [HttpPost]
         [Route("event/{id:int}/participate")]//change to category/id/participate
         public IActionResult SignUP(int id, Signup signup)
@@ -148,6 +154,7 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Participant")]
         [HttpGet]
         [Route("auth/profile/results")]
         public IActionResult GetResults()
@@ -158,7 +165,7 @@ namespace PROGPOE.Controllers
                 $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " +
                 $"INNER JOIN Event ON Event.EventID = PR.EventID " +
                 $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
-                $"WHERE Users.UserID = {loggedIn.UserID}";
+                $"WHERE Users.UserID = {Convert.ToInt32(claims[0])}";
             using SqlDataAdapter adp = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adp.Fill(dt);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -19,6 +20,7 @@ namespace PROGPOE.Controllers
             _config = config;
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpPost]
         [Route("categories")]
         public IActionResult CreateCategory(Category newCat)
@@ -39,6 +41,7 @@ namespace PROGPOE.Controllers
             //return CreatedAtAction(nameof(GetCategory), new { id = newCat.CategoryID }, newCat);
         }
 
+        [Authorize(Roles = "Organiser,Participant")]
         [HttpGet]
         [Route("categories")]
         public IActionResult GetAllCategories()
@@ -62,6 +65,7 @@ namespace PROGPOE.Controllers
             return Ok(categories);
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpPost]
         [Route("/events")]
         public IActionResult CreateEvents(Event newEvent)
@@ -86,6 +90,7 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Organiser,Participant")]
         [HttpGet]
         [Route("events/{id:int}")]
         public IActionResult GetEvent(int id)
@@ -110,6 +115,7 @@ namespace PROGPOE.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpPut]
         [Route("events/{id:int}")]
         public IActionResult UpdateEvent(int id, Event upd)
@@ -148,6 +154,7 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Organiser,Participant")]
         [HttpGet]
         [Route("/events")]
         public IActionResult GetAllEvents()
@@ -176,6 +183,7 @@ namespace PROGPOE.Controllers
             return Ok(events);
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpPost]
         [Route("results")]
         public IActionResult CreateResults(ParticipantResults results)
@@ -205,6 +213,7 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpGet]
         [Route("api/events/{id:int}/participants")]
         public IActionResult GetAllParticipants(int id)
@@ -232,6 +241,7 @@ namespace PROGPOE.Controllers
             return Ok(participants);
         }
 
+        [Authorize(Roles = "Organiser")]
         [HttpDelete]
         [Route("api/events/{id:int}")]
         public IActionResult DeleteEvent(int id)

@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "DeleteEvent",
+    "RelativePath": "api/Event/api/events/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
     "Method": "GetAllParticipants",
     "RelativePath": "api/Event/api/events/{id}/participants",
     "HttpMethod": "GET",

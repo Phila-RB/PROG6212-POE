@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,7 +7,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "YourAppSessionCookie";
+        options.Cookie.HttpOnly = true; // Prevents client-side script access
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Requires HTTPS
+        options.Cookie.SameSite = SameSiteMode.Strict; // Mitigates CSRF
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Session duration
+        options.SlidingExpiration = true; // Renews session if user is active
 
+        // Suppress automatic redirects to Login pages since this is an API
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+    });
 
 var app = builder.Build();
 
