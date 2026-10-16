@@ -9,7 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace PROGPOE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class EventController : ControllerBase
     {
@@ -23,20 +23,20 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Organiser")]
         [HttpPost]
         [Route("categories")]
-        public IActionResult CreateCategory(Category newCat)
+        public IActionResult CreateCategory(Category newCat) //this api creates categories
         {
             if (newCat == null)
             {
                 return NotFound();
             }
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            using SqlCommand cmd = new SqlCommand("INSERT INTO Category (CategoryName) VALUES (@Name)", con);
+            using SqlCommand cmd = new SqlCommand("INSERT INTO Category (CategoryName) VALUES (@Name)", con); // adds new categeory to database
 
             cmd.Parameters.AddWithValue("@Name", newCat.CategoryName);
 
-            con.Open();
-            int rowsAffected = cmd.ExecuteNonQuery();
-            con.Close();
+            con.Open(); //opens connection to database
+            int rowsAffected = cmd.ExecuteNonQuery(); //shows rows affected
+            con.Close(); //closes connection to database
             return Created();
             //return CreatedAtAction(nameof(GetCategory), new { id = newCat.CategoryID }, newCat);
         }
@@ -46,29 +46,30 @@ namespace PROGPOE.Controllers
         [Route("categories")]
         public IActionResult GetAllCategories()
         {
-            List<Category> categories = new List<Category>();
-            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+            List<Category> categories = new List<Category>(); //places all retrieved categories in this list
+            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString()); //sql connection string
             using SqlDataAdapter adp = new SqlDataAdapter("SELECT * FROM Category", con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
-            Category category = new Category();
-            if (dt.Rows.Count > 0)
+            
+            if (dt.Rows.Count > 0) // loops through data table and adds each category to list
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    Category category = new Category();
                     category.CategoryID = Convert.ToInt32(dt.Rows[i]["CategoryID"]);
                     category.CategoryName = Convert.ToString(dt.Rows[i]["CategoryName"]);
                     categories.Add(category);
                 }
 
             }
-            return Ok(categories);
+            return Ok(categories); //returns 200
         }
 
         [Authorize(Roles = "Organiser")]
         [HttpPost]
         [Route("/events")]
-        public IActionResult CreateEvents(Event newEvent)
+        public IActionResult CreateEvents(Event newEvent) //this api creates events
         {
             if (newEvent == null)
             {
@@ -77,7 +78,7 @@ namespace PROGPOE.Controllers
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             using SqlCommand cmd = new SqlCommand("INSERT INTO Event (CategoryID, EventName, Location, Description, Date, Type) VALUES (@catID, @name, @loc, @des, @date, @type)", con);
 
-            cmd.Parameters.AddWithValue("@catID", newEvent.CategoryID);
+            cmd.Parameters.AddWithValue("@catID", newEvent.CategoryID);//adds values in a way to avoid injection
             cmd.Parameters.AddWithValue("@name", newEvent.EventName);
             cmd.Parameters.AddWithValue("@loc", newEvent.Location);
             cmd.Parameters.AddWithValue("@des", newEvent.Description);
@@ -93,16 +94,17 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Organiser,Participant")]
         [HttpGet]
         [Route("events/{id:int}")]
-        public IActionResult GetEvent(int id)
+        public IActionResult GetEvent(int id) //this api gets a specific event
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             string query = $"SELECT * FROM Event WHERE EventID = {id}";
             SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             dap.Fill(dt);
-            Event newEvent = new Event();
+           
             if (dt.Rows.Count > 0)
             {
+                Event newEvent = new Event();
                 newEvent.EventID = Convert.ToInt32(dt.Rows[0]["EventID"]);
                 newEvent.CategoryID = Convert.ToInt32(dt.Rows[0]["CategoryID"]);
                 newEvent.EventName = Convert.ToString(dt.Rows[0]["EventName"]);
@@ -115,10 +117,10 @@ namespace PROGPOE.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Organiser")]
+        [Authorize(Roles = "Organiser")]//only organiser can use this api
         [HttpPut]
         [Route("events/{id:int}")]
-        public IActionResult UpdateEvent(int id, Event upd)
+        public IActionResult UpdateEvent(int id, Event upd)// this api updates an event
         {
             Console.Out.WriteLine(upd);
             if (upd == null)
@@ -154,21 +156,22 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
-        [Authorize(Roles = "Organiser,Participant")]
+        [Authorize(Roles = "Organiser,Participant")] //both auth can use this api
         [HttpGet]
         [Route("/events")]
-        public IActionResult GetAllEvents()
+        public IActionResult GetAllEvents() //this api retrieves all events
         {
             List<Event> events = new List<Event>();
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             using SqlDataAdapter adp = new SqlDataAdapter("SELECT * FROM Event", con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
-            Event newEvent = new Event();
+            
             if (dt.Rows.Count > 0)
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    Event newEvent = new Event();
                     newEvent.EventID = Convert.ToInt32(dt.Rows[i]["EventID"]);
                     newEvent.CategoryID = Convert.ToInt32(dt.Rows[i]["CategoryID"]);
                     newEvent.EventName = Convert.ToString(dt.Rows[i]["EventName"]);
@@ -183,10 +186,10 @@ namespace PROGPOE.Controllers
             return Ok(events);
         }
 
-        [Authorize(Roles = "Organiser")]
+        [Authorize(Roles = "Organiser")] //only organiser auth can use this api
         [HttpPost]
         [Route("results")]
-        public IActionResult CreateResults(ParticipantResults results)
+        public IActionResult CreateResults(ParticipantResults results) // this api allows organisers to create the results of the participants
         {
             if (results == null)
             {
@@ -216,7 +219,7 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Organiser")]
         [HttpGet]
         [Route("api/events/{id:int}/participants")]
-        public IActionResult GetAllParticipants(int id)
+        public IActionResult GetAllParticipants(int id) //this api gets all participants of an event
         {
             List<Participant> participants = new List<Participant>();
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
@@ -227,11 +230,12 @@ namespace PROGPOE.Controllers
             using SqlDataAdapter adp = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
-            Participant participant = new Participant();
+            
             if (dt.Rows.Count > 0)
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    Participant participant = new Participant();
                     participant.ParticipantID = Convert.ToInt32(dt.Rows[i]["ParticipantID"]);
                     participant.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                     participants.Add(participant);
@@ -244,7 +248,7 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Organiser")]
         [HttpDelete]
         [Route("api/events/{id:int}")]
-        public IActionResult DeleteEvent(int id)
+        public IActionResult DeleteEvent(int id) //this api removes an event
         {
             string query = $"DELETE FROM Event WHERE EventID = {id}";
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());

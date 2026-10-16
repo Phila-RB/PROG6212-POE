@@ -13,44 +13,44 @@ using System.Data.SqlTypes;
 using System.Security.Claims;
 namespace PROGPOE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
 
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase 
     {
-        private readonly IConfiguration _config;
-        private readonly PasswordHasher<string> _hasher = new PasswordHasher<string>();
+        private readonly IConfiguration _config; // config
+        private readonly PasswordHasher<string> _hasher = new PasswordHasher<string>(); //password hasher
 
         List<Claim> claims;
-        public UserController(IConfiguration config)
+        public UserController(IConfiguration config) //constructor 
         {
             _config = config;
         }
 
-        [Authorize(Roles ="Organiser,Participant")]
-        [HttpGet]
-        [Route("auth/profile/{id:int}")]
-        public IActionResult GetProfile(int id)
+        [Authorize(Roles ="Organiser,Participant")] // role manager
+        [HttpGet] //http request type
+        [Route("auth/profile/{id:int}")] // route
+        public IActionResult GetProfile(int id) // this api gets the user profile
         {
-            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = {id}", con);
-            DataTable dt = new DataTable();
-            dap.Fill(dt);
+            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString()); //sql connection
+            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = {id}", con); //data adapter
+            DataTable dt = new DataTable(); //data table
+            dap.Fill(dt); //opens and closes connection and populates data table
             User user = new User();
-            if (dt.Rows.Count > 0) {
+            if (dt.Rows.Count > 0) { // loops through data table and populates user object 
                 user.UserID = Convert.ToInt32(dt.Rows[0]["UserID"]);
                 user.Name = Convert.ToString(dt.Rows[0]["Name"]);
                 user.Surname = Convert.ToString(dt.Rows[0]["Surname"]);
                 user.Access = Convert.ToString(dt.Rows[0]["Access"]);
                 user.Password = Convert.ToString(dt.Rows[0]["Password"]);
-                return Ok(user);
+                return Ok(user); //returns data with 200 response
             }
-            return NotFound();
+            return NotFound(); //if user doesnt exist returns 404
         }
 
-        [HttpPost]
+        [HttpPost]//post..does not require auth to use
         [Route("auth/register")]
-        public IActionResult Register(User newUser)
+        public IActionResult Register(User newUser)//this api registers a new user 
         {
             if (newUser == null)
             {
@@ -58,7 +58,7 @@ namespace PROGPOE.Controllers
             }
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             using SqlCommand cmd = new SqlCommand("INSERT INTO Users (Name, Surname, Access, Password) VALUES (@Name, @Surname, @Access, @Password)", con);
-            string pass = HashPassword(newUser.Password);
+            string pass = HashPassword(newUser.Password);//hashing password
 
             cmd.Parameters.AddWithValue("@Name", newUser.Name);
             cmd.Parameters.AddWithValue("@Surname", newUser.Surname);
@@ -71,12 +71,12 @@ namespace PROGPOE.Controllers
             return CreatedAtAction(nameof(GetProfile), new { id = newUser.UserID }, newUser);
         }
 
-        public bool PassCheck(string storedHash, string providedPassword)
+        public bool PassCheck(string storedHash, string providedPassword)//this function verifies passwords
         {
             var result = _hasher.VerifyHashedPassword("", storedHash.Trim(), providedPassword);
             return result == PasswordVerificationResult.Success;
         }
-        public string HashPassword(string password)
+        public string HashPassword(string password)//this function hashes the registering users password
         {
             // Automatically salts and hashes the password
             string hashedPassword = _hasher.HashPassword("", password);
@@ -85,7 +85,7 @@ namespace PROGPOE.Controllers
 
         [HttpPost]
         [Route("/auth/login")]
-        public async Task<IActionResult> Login(string name, string surname, string password)
+        public async Task<IActionResult> Login(string name, string surname, string password)//this api logs the user in and creates a session token to validate whether they are authenticated or not
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             string query = $"SELECT * FROM Users WHERE Name = '{name}' AND Surname = '{surname}'";
@@ -115,7 +115,7 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Organiser,Participant")]
         [HttpPut]
         [Route("auth/profile")]
-        public IActionResult UpdateProfile(User userUpd)
+        public IActionResult UpdateProfile(User userUpd)// this api updates the users profile
         {
             if (userUpd == null)
             {
@@ -154,16 +154,8 @@ namespace PROGPOE.Controllers
             {
                 return NotFound();
             }
-            //string query = $"SELECT Signup.ParticipantID, Signup.EventID, Signup.CategoryID FROM Signup" +
-            //    $" WHERE Signup.ParticipantID = {signup.ParticipantID} AND Signup.EventID = {signup.EventID} AND Signup.CategoryID = {signup.CategoryID}";
+
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            //SqlDataAdapter adp = new SqlDataAdapter(query, con);
-            //DataTable dt = new DataTable();
-            //adp.Fill(dt);
-            //if (dt.Rows.Count == 0)
-            //{
-            //    return NotFound("sorry please double check the event or participant or category as what u entered may not exist");
-            //}
             using SqlCommand cmd = new SqlCommand("INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES (@EventID, @ParticipantID, @CategoryID)", con);
 
             cmd.Parameters.AddWithValue("@EventID", signup.EventID);
@@ -179,12 +171,12 @@ namespace PROGPOE.Controllers
         [Authorize(Roles = "Participant")]
         [HttpGet]
         [Route("auth/profile/results")]
-        public IActionResult GetResults()
+        public IActionResult GetResults()//this api gets users aprticipation results
         {
             List<ParticipantResults> results = new List<ParticipantResults>();
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             string query = $"SELECT PR.PRID, PR.ParticipantID, PR.EventID, PR.Placement, PR.Time FROM ParticipantResults AS PR " +
-                $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " +
+                $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " + //this query tells the database to retrieve this specific data 
                 $"INNER JOIN Event ON Event.EventID = PR.EventID " +
                 $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
                 $"WHERE Users.UserID = {Convert.ToInt32(claims[0])}";
@@ -193,9 +185,10 @@ namespace PROGPOE.Controllers
             adp.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                ParticipantResults result = new();
+                
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    ParticipantResults result = new();
                     result.PRID = Convert.ToInt32(dt.Rows[i]["PRID"]);
                     result.ParticipantID = Convert.ToInt32(dt.Rows[i]["ParticipantID"]);
                     result.EventID = Convert.ToInt32(dt.Rows[i]["EventID"]);
@@ -208,42 +201,5 @@ namespace PROGPOE.Controllers
             return Ok(results);
         }
 
-        //[HttpPost("/addstudent")]
-        //public IActionResult CreatStu(Student newStu)
-        //{
-        //    if (newStu == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    StuDB.Add(newStu);
-        //    return CreatedAtAction(nameof(GetStu), new { id = newStu.Id }, newStu);
-        //}
-
-        //[HttpGet]
-        //[Route("users")]
-        //public IActionResult GetAllUsers()
-        //{
-        //    List<User> list = new List<User>();
-
-        //    SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-        //    SqlDataAdapter dap = new SqlDataAdapter("SELECT * FROM Users", con);
-        //    DataTable dt = new DataTable();
-        //    dap.Fill(dt);
-        //    if (dt.Rows.Count > 0)
-        //    {
-        //        for (int i = 0; i < dt.Rows.Count; i++)
-        //        {
-        //            User user = new User();
-        //            user.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
-        //            user.Name = Convert.ToString(dt.Rows[i]["Name"]);
-        //            user.Surname = Convert.ToString(dt.Rows[i]["Surname"]);
-        //            user.Access = Convert.ToString(dt.Rows[i]["Access"]);
-        //            user.Password = Convert.ToString(dt.Rows[i]["Password"]);
-        //            list.Add(user);
-        //        }
-        //    }
-        //    con.Close();
-        //    return Ok(list);
-        //}
     }
 }

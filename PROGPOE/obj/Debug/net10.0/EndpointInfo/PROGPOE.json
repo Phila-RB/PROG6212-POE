@@ -13,7 +13,7 @@
     }
   ],
   "paths": {
-    "/api/Event/categories": {
+    "/api/categories": {
       "post": {
         "tags": [
           "Event"
@@ -97,7 +97,7 @@
         }
       }
     },
-    "/api/Event/events/{id}": {
+    "/api/events/{id}": {
       "get": {
         "tags": [
           "Event"
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/api/Event/results": {
+    "/api/results": {
       "post": {
         "tags": [
           "Event"
@@ -195,7 +195,7 @@
         }
       }
     },
-    "/api/Event/api/events/{id}/participants": {
+    "/api/api/events/{id}/participants": {
       "get": {
         "tags": [
           "Event"
@@ -219,7 +219,7 @@
         }
       }
     },
-    "/api/Event/api/events/{id}": {
+    "/api/api/events/{id}": {
       "delete": {
         "tags": [
           "Event"
@@ -243,7 +243,7 @@
         }
       }
     },
-    "/api/User/auth/profile/{id}": {
+    "/api/auth/profile/{id}": {
       "get": {
         "tags": [
           "User"
@@ -267,7 +267,7 @@
         }
       }
     },
-    "/api/User/auth/register": {
+    "/api/auth/register": {
       "post": {
         "tags": [
           "User"
@@ -334,7 +334,7 @@
         }
       }
     },
-    "/api/User/auth/profile": {
+    "/api/auth/profile": {
       "put": {
         "tags": [
           "User"
@@ -366,7 +366,7 @@
         }
       }
     },
-    "/api/User/event/{id}/participate": {
+    "/api/event/{id}/participate": {
       "post": {
         "tags": [
           "User"
@@ -410,7 +410,7 @@
         }
       }
     },
-    "/api/User/auth/profile/results": {
+    "/api/auth/profile/results": {
       "get": {
         "tags": [
           "User"

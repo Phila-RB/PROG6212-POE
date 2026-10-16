@@ -4,6 +4,7 @@ namespace PROGPOE.Models
 {
     public class User
     {
+        //User model
         public int UserID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

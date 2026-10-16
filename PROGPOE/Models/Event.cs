@@ -2,6 +2,7 @@
 {
     public class Event
     {
+        //event model
         public int EventID { get; set; }
         public int CategoryID { get; set; }
         public string EventName { get; set; }

@@ -2,6 +2,7 @@
 {
     public class ParticipantResults
     {
+        //participant result model
         public int PRID { get; set; }
         public int ParticipantID { get; set; }
         public int EventID { get; set; }

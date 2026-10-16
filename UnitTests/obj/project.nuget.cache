@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "uEWfDELZDsc=",
+  "dgSpecHash": "l6M3ghHpPKM=",
   "success": true,
   "projectFilePath": "C:\\Users\\phila\\source\\repos\\PROGPOE\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\phila\\.nuget\\packages\\azure.core\\1.50.0\\azure.core.1.50.0.nupkg.sha512",
     "C:\\Users\\phila\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",
+    "C:\\Users\\phila\\.nuget\\packages\\castle.core\\5.2.1\\castle.core.5.2.1.nupkg.sha512",
     "C:\\Users\\phila\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
+    "C:\\Users\\phila\\.nuget\\packages\\fakeiteasy\\9.0.1\\fakeiteasy.9.0.1.nupkg.sha512",
     "C:\\Users\\phila\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.3.12\\microsoft.aspnetcore.authentication.2.3.12.nupkg.sha512",
     "C:\\Users\\phila\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.10\\microsoft.aspnetcore.authentication.abstractions.2.3.10.nupkg.sha512",
     "C:\\Users\\phila\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.3.13\\microsoft.aspnetcore.authentication.cookies.2.3.13.nupkg.sha512",
