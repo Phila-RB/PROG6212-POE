@@ -90,6 +90,16 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "GetProfile",
+    "RelativePath": "api/auth/profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
     "Method": "UpdateProfile",
     "RelativePath": "api/auth/profile",
     "HttpMethod": "PUT",
@@ -99,22 +109,6 @@
       {
         "Name": "userUpd",
         "Type": "PROGPOE.Models.User",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PROGPOE.Controllers.UserController",
-    "Method": "GetProfile",
-    "RelativePath": "api/auth/profile/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -175,7 +169,7 @@
   {
     "ContainingType": "PROGPOE.Controllers.UserController",
     "Method": "SignUP",
-    "RelativePath": "api/event/{id}/participate",
+    "RelativePath": "api/category/{id}/participate",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

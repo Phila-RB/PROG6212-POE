@@ -21,7 +21,6 @@ namespace PROGPOE.Controllers
         private readonly IConfiguration _config; // config
         private readonly PasswordHasher<string> _hasher = new PasswordHasher<string>(); //password hasher
 
-        List<Claim> claims;
         public UserController(IConfiguration config) //constructor 
         {
             _config = config;
@@ -29,11 +28,11 @@ namespace PROGPOE.Controllers
 
         [Authorize(Roles ="Organiser,Participant")] // role manager
         [HttpGet] //http request type
-        [Route("auth/profile/{id:int}")] // route
-        public IActionResult GetProfile(int id) // this api gets the user profile
+        [Route("auth/profile")] // route
+        public IActionResult GetProfile() // this api gets the user profile
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString()); //sql connection
-            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = {id}", con); //data adapter
+            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}", con); //data adapter
             DataTable dt = new DataTable(); //data table
             dap.Fill(dt); //opens and closes connection and populates data table
             User user = new User();
@@ -101,7 +100,7 @@ namespace PROGPOE.Controllers
                     return Unauthorized();
                 }
                 // 2. Create user identity claims
-                claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
+                var claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 // 3. Issue the session cookie
@@ -122,18 +121,18 @@ namespace PROGPOE.Controllers
                 return NotFound();
             }
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT * FROM Users WHERE UserID = {Convert.ToInt32(claims[0])}";
+            string query = $"SELECT * FROM Users WHERE UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
             SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             dap.Fill(dt);
             using SqlCommand cmd = new SqlCommand("UPDATE Users SET Name = @NAME, Surname = @Surname, Access = @ACCESS, Password = @Password WHERE UserId = @ID", con);
 
-            string name = (String.IsNullOrEmpty(userUpd.Name))? claims[1].ToString() : userUpd.Name;
-            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? claims[2].ToString() : userUpd.Surname;
-            string access = (String.IsNullOrEmpty(userUpd.Access)) ? claims[3].ToString() : userUpd.Access;
+            string name = (String.IsNullOrEmpty(userUpd.Name))? HttpContext.User.FindFirst(ClaimTypes.Name)?.Value : userUpd.Name;
+            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? HttpContext.User.FindFirst(ClaimTypes.Surname)?.Value : userUpd.Surname;
+            string access = (String.IsNullOrEmpty(userUpd.Access)) ? HttpContext.User.FindFirst(ClaimTypes.Role)?.Value : userUpd.Access;
             string password = (String.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
 
-            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(claims[0]));
+            cmd.Parameters.AddWithValue("@ID", HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
             cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@Surname", surname);
             cmd.Parameters.AddWithValue("@Access", access);
@@ -147,8 +146,8 @@ namespace PROGPOE.Controllers
 
         [Authorize(Roles = "Participant")]
         [HttpPost]
-        [Route("event/{id:int}/participate")]//change to category/id/participate
-        public IActionResult SignUP(int id, Signup signup)
+        [Route("category/{id:int}/participate")]
+        public IActionResult SignUP(int id, Signup signup)// this apie signs a user up to an event
         {
             if (signup == null)
             {
@@ -156,11 +155,27 @@ namespace PROGPOE.Controllers
             }
 
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+            string query = $"SELECT Participant.ParticipantID from Participant INNER JOIN Users ON Participant.UserID = Users.UserID where Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
+            SqlDataAdapter dap = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            dap.Fill(dt);
+
+            if (dt.Rows.Count == 0) {
+                string q2 = $"INSERT INTO Participant (UserID) VALUES ({HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value})";
+                using SqlCommand cmd2 = new SqlCommand(q2, con);
+                con.Open();
+                con.Close();
+                string q3 = $"SELECT Participant.ParticipantID from Participant INNER JOIN Users ON Participant.UserID = Users.UserID where Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
+                dap = new SqlDataAdapter(q3, con);
+                dt = new DataTable();
+                dap.Fill(dt);
+            }
+
             using SqlCommand cmd = new SqlCommand("INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES (@EventID, @ParticipantID, @CategoryID)", con);
 
             cmd.Parameters.AddWithValue("@EventID", signup.EventID);
-            cmd.Parameters.AddWithValue("@ParticipantID", signup.ParticipantID);
-            cmd.Parameters.AddWithValue("@CategoryID", signup.CategoryID);
+            cmd.Parameters.AddWithValue("@ParticipantID", dt.Rows[0]["ParticipantID"]);
+            cmd.Parameters.AddWithValue("@CategoryID", id);
 
             con.Open();
             int rowsAffected = cmd.ExecuteNonQuery();
@@ -179,7 +194,7 @@ namespace PROGPOE.Controllers
                 $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " + //this query tells the database to retrieve this specific data 
                 $"INNER JOIN Event ON Event.EventID = PR.EventID " +
                 $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
-                $"WHERE Users.UserID = {Convert.ToInt32(claims[0])}";
+                $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
             using SqlDataAdapter adp = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
