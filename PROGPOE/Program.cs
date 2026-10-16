@@ -16,7 +16,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.HttpOnly = true; // Prevents client-side script access
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Requires HTTPS
         options.Cookie.SameSite = SameSiteMode.Strict; // Mitigates CSRF
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(1); // Session duration
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Session duration
         options.SlidingExpiration = true; // Renews session if user is active
 
         // Suppress automatic redirects to Login pages since this is an API
