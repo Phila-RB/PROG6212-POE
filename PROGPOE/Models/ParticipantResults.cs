@@ -6,6 +6,6 @@
         public int ParticipantID { get; set; }
         public int EventID { get; set; }
         public int Placement { get; set; }
-        public TimeOnly Time { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }

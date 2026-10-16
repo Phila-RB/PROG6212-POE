@@ -1,5 +1,100 @@
 [
   {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllParticipants",
+    "RelativePath": "api/Event/api/events/{id}/participants",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "CreateCategory",
+    "RelativePath": "api/Event/categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newCat",
+        "Type": "PROGPOE.Models.Category",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllCategories",
+    "RelativePath": "api/Event/categories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetEvent",
+    "RelativePath": "api/Event/events/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "UpdateEvent",
+    "RelativePath": "api/Event/events/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "upd",
+        "Type": "PROGPOE.Models.Event",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "CreateResults",
+    "RelativePath": "api/Event/results",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "results",
+        "Type": "PROGPOE.Models.ParticipantResults",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PROGPOE.Controllers.UserController",
     "Method": "UpdateProfile",
     "RelativePath": "api/User/auth/profile",
@@ -33,6 +128,16 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "GetResults",
+    "RelativePath": "api/User/auth/profile/results",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
     "Method": "Register",
     "RelativePath": "api/User/auth/register",
     "HttpMethod": "POST",
@@ -42,6 +147,27 @@
       {
         "Name": "newUser",
         "Type": "PROGPOE.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "SignUP",
+    "RelativePath": "api/User/event/{id}/participate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "signup",
+        "Type": "PROGPOE.Models.Signup",
         "IsRequired": true
       }
     ],
@@ -71,6 +197,32 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "CreateEvents",
+    "RelativePath": "events",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newEvent",
+        "Type": "PROGPOE.Models.Event",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllEvents",
+    "RelativePath": "events",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

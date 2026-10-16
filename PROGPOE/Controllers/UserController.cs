@@ -14,7 +14,7 @@ namespace PROGPOE.Controllers
     {
         private readonly IConfiguration _config;
         //private readonly User loggedIn = new User();
-        private readonly User loggedIn = new() {UserID = 1, Name = "Thabo", Surname = "Mokoena", Access = "Organiser", Password = "******" };
+        private readonly User loggedIn = new() {UserID = 3, Name = "Thabo", Surname = "Mokoena", Access = "Organiser", Password = "******" };
 
         public UserController(IConfiguration config)
         {
@@ -26,7 +26,7 @@ namespace PROGPOE.Controllers
         public IActionResult GetProfile(int id)
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = id", con);
+            SqlDataAdapter dap = new SqlDataAdapter($"SELECT * FROM Users WHERE UserID = {id}", con);
             DataTable dt = new DataTable();
             dap.Fill(dt);
             User user = new User();
@@ -116,6 +116,67 @@ namespace PROGPOE.Controllers
             int rowsAffected = cmd.ExecuteNonQuery();
             con.Close();
             return CreatedAtAction(nameof(GetProfile), new { id = userUpd.UserID }, userUpd);
+        }
+
+        [HttpPost]
+        [Route("event/{id:int}/participate")]//change to category/id/participate
+        public IActionResult SignUP(int id, Signup signup)
+        {
+            if (signup == null)
+            {
+                return NotFound();
+            }
+            //string query = $"SELECT Signup.ParticipantID, Signup.EventID, Signup.CategoryID FROM Signup" +
+            //    $" WHERE Signup.ParticipantID = {signup.ParticipantID} AND Signup.EventID = {signup.EventID} AND Signup.CategoryID = {signup.CategoryID}";
+            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+            //SqlDataAdapter adp = new SqlDataAdapter(query, con);
+            //DataTable dt = new DataTable();
+            //adp.Fill(dt);
+            //if (dt.Rows.Count == 0)
+            //{
+            //    return NotFound("sorry please double check the event or participant or category as what u entered may not exist");
+            //}
+            using SqlCommand cmd = new SqlCommand("INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES (@EventID, @ParticipantID, @CategoryID)", con);
+
+            cmd.Parameters.AddWithValue("@EventID", signup.EventID);
+            cmd.Parameters.AddWithValue("@ParticipantID", signup.ParticipantID);
+            cmd.Parameters.AddWithValue("@CategoryID", signup.CategoryID);
+
+            con.Open();
+            int rowsAffected = cmd.ExecuteNonQuery();
+            con.Close();
+            return Created();
+        }
+
+        [HttpGet]
+        [Route("auth/profile/results")]
+        public IActionResult GetResults()
+        {
+            List<ParticipantResults> results = new List<ParticipantResults>();
+            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+            string query = $"SELECT PR.PRID, PR.ParticipantID, PR.EventID, PR.Placement, PR.Time FROM ParticipantResults AS PR " +
+                $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " +
+                $"INNER JOIN Event ON Event.EventID = PR.EventID " +
+                $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
+                $"WHERE Users.UserID = {loggedIn.UserID}";
+            using SqlDataAdapter adp = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            adp.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                ParticipantResults result = new();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    result.PRID = Convert.ToInt32(dt.Rows[i]["PRID"]);
+                    result.ParticipantID = Convert.ToInt32(dt.Rows[i]["ParticipantID"]);
+                    result.EventID = Convert.ToInt32(dt.Rows[i]["EventID"]);
+                    result.Placement = Convert.ToInt32(dt.Rows[i]["Placement"]);
+                    result.Time = (TimeSpan)dt.Rows[i]["Time"];
+                
+                    results.Add(result);
+                }
+            }
+            return Ok(results);
         }
 
         //[HttpPost("/addstudent")]
