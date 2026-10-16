@@ -112,6 +112,63 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "PassCheck",
+    "RelativePath": "api/User",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storedHash",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "providedPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "HashPassword",
+    "RelativePath": "api/User",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
     "Method": "UpdateProfile",
     "RelativePath": "api/User/auth/profile",
     "HttpMethod": "PUT",
@@ -191,7 +248,7 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.UserController",
-    "Method": "GetUser",
+    "Method": "Login",
     "RelativePath": "auth/login",
     "HttpMethod": "POST",
     "IsController": true,

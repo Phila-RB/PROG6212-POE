@@ -1,4 +1,6 @@
-﻿namespace PROGPOE.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace PROGPOE.Models
 {
     public class User
     {

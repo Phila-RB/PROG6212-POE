@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ namespace PROGPOE.Controllers
     public class UserController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly PasswordHasher<string> _hasher = new PasswordHasher<string>();
+
         List<Claim> claims;
         public UserController(IConfiguration config)
         {
@@ -55,29 +58,48 @@ namespace PROGPOE.Controllers
             }
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
             using SqlCommand cmd = new SqlCommand("INSERT INTO Users (Name, Surname, Access, Password) VALUES (@Name, @Surname, @Access, @Password)", con);
+            string pass = HashPassword(newUser.Password);
 
             cmd.Parameters.AddWithValue("@Name", newUser.Name);
             cmd.Parameters.AddWithValue("@Surname", newUser.Surname);
             cmd.Parameters.AddWithValue("@Access", newUser.Access);
-            cmd.Parameters.AddWithValue("@Password", newUser.Password);
+            cmd.Parameters.AddWithValue("@Password", pass);
 
             con.Open();
             int rowsAffected = cmd.ExecuteNonQuery();
             con.Close();
             return CreatedAtAction(nameof(GetProfile), new { id = newUser.UserID }, newUser);
         }
-        
+
+        public bool PassCheck(string storedHash, string providedPassword)
+        {
+            var result = _hasher.VerifyHashedPassword("", storedHash.Trim(), providedPassword);
+            return result == PasswordVerificationResult.Success;
+        }
+        public string HashPassword(string password)
+        {
+            // Automatically salts and hashes the password
+            string hashedPassword = _hasher.HashPassword("", password);
+            return hashedPassword;
+        }
+
         [HttpPost]
         [Route("/auth/login")]
-        public async Task<IActionResult> GetUser(string name, string surname, string password)
+        public async Task<IActionResult> Login(string name, string surname, string password)
         {
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT UserID, Name, Surname, Access FROM Users WHERE Name = '{name}' AND Surname = '{surname}' AND Password = '{password}'";
+            string query = $"SELECT * FROM Users WHERE Name = '{name}' AND Surname = '{surname}'";
             using SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
+
             dap.Fill(dt);
             if (dt.Rows.Count > 0)
             {
+                bool checkPass = PassCheck(dt.Rows[0]["Password"].ToString(), password);
+                if (!checkPass)
+                {
+                    return Unauthorized();
+                }
                 // 2. Create user identity claims
                 claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
