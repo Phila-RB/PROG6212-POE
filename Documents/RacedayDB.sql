@@ -5,7 +5,7 @@ UserID INT IDENTITY(1,1)  NOT NULL PRIMARY KEY,
 Name VARCHAR(30) NOT NULL,
 Surname VARCHAR(30) NOT NULL,
 Access VARCHAR(30) NOT NULL CHECK (Access IN ('Organiser', 'Participant')),
-Password VARCHAR(50) NOT NULL
+Password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Category(
