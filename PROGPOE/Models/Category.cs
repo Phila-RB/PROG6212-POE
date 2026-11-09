@@ -4,6 +4,7 @@
     {
         //category model
         public int CategoryID { get; set; }
+        public int EventID { get; set; }
         public string CategoryName { get; set; }
 
     }

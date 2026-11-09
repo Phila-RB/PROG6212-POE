@@ -57,32 +57,16 @@
     ]
   },
   {
-    "ContainingType": "PROGPOE.Controllers.EventController",
-    "Method": "DeleteEvent",
-    "RelativePath": "api/api/events/{id}",
-    "HttpMethod": "DELETE",
+    "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PROGPOE.Controllers.EventController",
-    "Method": "GetAllParticipants",
-    "RelativePath": "api/api/events/{id}/participants",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "user",
+        "Type": "PROGPOE.Models.User",
         "IsRequired": true
       }
     ],
@@ -189,6 +173,38 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetEventCategories",
+    "RelativePath": "api/event/{id}/categories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "CreateEvents",
+    "RelativePath": "api/events",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newEvent",
+        "Type": "PROGPOE.Models.Event",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
     "Method": "GetEvent",
     "RelativePath": "api/events/{id}",
     "HttpMethod": "GET",
@@ -226,6 +242,68 @@
   },
   {
     "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "DeleteEvent",
+    "RelativePath": "api/events/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllParticipants",
+    "RelativePath": "api/events/{id}/participants",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllOrganiserEvents",
+    "RelativePath": "api/organiser/events",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
+    "Method": "GetAllEvents",
+    "RelativePath": "api/participant/events",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.UserController",
+    "Method": "SignedUP",
+    "RelativePath": "api/participating",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROGPOE.Controllers.EventController",
     "Method": "CreateResults",
     "RelativePath": "api/results",
     "HttpMethod": "POST",
@@ -238,58 +316,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PROGPOE.Controllers.UserController",
-    "Method": "Login",
-    "RelativePath": "auth/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "surname",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PROGPOE.Controllers.EventController",
-    "Method": "CreateEvents",
-    "RelativePath": "events",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "newEvent",
-        "Type": "PROGPOE.Models.Event",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PROGPOE.Controllers.EventController",
-    "Method": "GetAllEvents",
-    "RelativePath": "events",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   }
 ]

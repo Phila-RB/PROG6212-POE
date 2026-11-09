@@ -7,10 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PROGPOE.Models;
 using System.Data;
 using System.Data.SqlTypes;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace PROGPOE.Controllers
 {
     [Route("api")]
@@ -67,7 +71,7 @@ namespace PROGPOE.Controllers
             con.Open();
             int rowsAffected = cmd.ExecuteNonQuery();
             con.Close();
-            return CreatedAtAction(nameof(GetProfile), new { id = newUser.UserID }, newUser);
+            return Created();
         }
 
         public bool PassCheck(string storedHash, string providedPassword)//this function verifies passwords
@@ -83,30 +87,65 @@ namespace PROGPOE.Controllers
         }
 
         [HttpPost]
-        [Route("/auth/login")]
-        public async Task<IActionResult> Login(string name, string surname, string password)//this api logs the user in and creates a session token to validate whether they are authenticated or not
+        [Route("auth/login")]
+        public async Task<IActionResult> Login([FromBody] User user)//this api logs the user in and creates a session token to validate whether they are authenticated or not
         {
+            Console.WriteLine("API LOGIN METHOD REACHED");
+
+            Console.WriteLine("Name: " + user?.Name);
+            Console.WriteLine("Surname: " + user?.Surname);
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT * FROM Users WHERE Name = '{name}' AND Surname = '{surname}'";
+            string query = $"SELECT * FROM Users WHERE Name = '{user.Name}' AND Surname = '{user.Surname}'";
+            Console.WriteLine(query);
             using SqlDataAdapter dap = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
 
             dap.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                bool checkPass = PassCheck(dt.Rows[0]["Password"].ToString(), password);
-                if (!checkPass)
-                {
-                    return Unauthorized();
-                }
+                //bool checkPass = PassCheck(dt.Rows[0]["Password"].ToString(), user.Password);
+                //if (!checkPass)
+                //{
+                //    return Unauthorized();
+                //}
+               
                 // 2. Create user identity claims
-                var claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, user.Name), new Claim(ClaimTypes.Surname, user.Surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
+                //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                // 3. Issue the session cookie
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                //// 3. Issue the session cookie
+                //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                return Ok("logged in");
+                // Read JWT settings
+                var jwtSettings = _config.GetSection("Jwt");
+
+                var key = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
+                );
+
+                var credentials = new SigningCredentials(
+                    key,
+                    SecurityAlgorithms.HmacSha256
+                );
+
+                // Generate JWT
+                var token = new JwtSecurityToken(
+                    issuer: jwtSettings["Issuer"],
+                    audience: jwtSettings["Audience"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(
+                        Convert.ToDouble(jwtSettings["ExpiryMinutes"])
+                    ),
+                    signingCredentials: credentials
+                );
+
+                string tokenString = new JwtSecurityTokenHandler()
+                    .WriteToken(token);
+
+                // Return token and user information
+                LoginResponse loginResponse = new LoginResponse() { Token = tokenString, UserID = (int)dt.Rows[0]["UserID"], Name = user.Name, Surname = user.Surname, Access = dt.Rows[0]["Access"].ToString() };
+               
+                return Ok(loginResponse);
             }
             return NotFound();
         }
@@ -126,11 +165,11 @@ namespace PROGPOE.Controllers
             DataTable dt = new DataTable();
             dap.Fill(dt);
             using SqlCommand cmd = new SqlCommand("UPDATE Users SET Name = @NAME, Surname = @Surname, Access = @ACCESS, Password = @Password WHERE UserId = @ID", con);
-
-            string name = (String.IsNullOrEmpty(userUpd.Name))? HttpContext.User.FindFirst(ClaimTypes.Name)?.Value : userUpd.Name;
-            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? HttpContext.User.FindFirst(ClaimTypes.Surname)?.Value : userUpd.Surname;
-            string access = (String.IsNullOrEmpty(userUpd.Access)) ? HttpContext.User.FindFirst(ClaimTypes.Role)?.Value : userUpd.Access;
-            string password = (String.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
+            
+            string name = (string.IsNullOrEmpty(userUpd.Name))? HttpContext.User.FindFirst(ClaimTypes.Name)?.Value : userUpd.Name;
+            string surname = (string.IsNullOrEmpty(userUpd.Surname)) ? HttpContext.User.FindFirst(ClaimTypes.Surname)?.Value : userUpd.Surname;
+            string access = (string.IsNullOrEmpty(userUpd.Access)) ? HttpContext.User.FindFirst(ClaimTypes.Role)?.Value : userUpd.Access;
+            string password = (string.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
 
             cmd.Parameters.AddWithValue("@ID", HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
             cmd.Parameters.AddWithValue("@Name", name);
@@ -144,11 +183,12 @@ namespace PROGPOE.Controllers
             return CreatedAtAction(nameof(GetProfile), new { id = userUpd.UserID }, userUpd);
         }
 
-        [Authorize(Roles = "Participant")]
+        //[Authorize(Roles = "Participant")]
         [HttpPost]
         [Route("category/{id:int}/participate")]
         public IActionResult SignUP(int id, Signup signup)// this apie signs a user up to an event
         {
+            Console.WriteLine("signup reached");
             if (signup == null)
             {
                 return NotFound();
@@ -175,7 +215,7 @@ namespace PROGPOE.Controllers
 
             cmd.Parameters.AddWithValue("@EventID", signup.EventID);
             cmd.Parameters.AddWithValue("@ParticipantID", dt.Rows[0]["ParticipantID"]);
-            cmd.Parameters.AddWithValue("@CategoryID", id);
+            cmd.Parameters.AddWithValue("@CategoryID", signup.CategoryID);
 
             con.Open();
             int rowsAffected = cmd.ExecuteNonQuery();
@@ -183,32 +223,71 @@ namespace PROGPOE.Controllers
             return Created();
         }
 
+        //[Authorize(Roles = "Participant")]
+        [HttpGet]
+        [Route("participating")]//added new rout and api to get events signed up for
+        public IActionResult SignedUP()// this apie signs a user up to an event
+        {
+            SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+            string query = "SELECT Event.EventName,'Joined' AS Status FROM Signup "+
+            "INNER JOIN Event "+
+            "ON Event.EventID = Signup.EventID "+
+            "INNER JOIN Participant as PR "+
+            "ON PR.ParticipantID = Signup.ParticipantID "+
+            "INNER JOIN Users "+
+            "ON Users.UserID = PR.UserID "+
+            $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value} ";
+            SqlDataAdapter dap = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            dap.Fill(dt);
+            List<SignedUpResponse> results = new List<SignedUpResponse>();
+            if (dt.Rows.Count != 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    SignedUpResponse result = new();
+                    result.EventName = dt.Rows[i]["EventName"].ToString();
+                    result.Status =  dt.Rows[i]["Status"].ToString();
+                    results.Add(result);
+                }
+            }
+
+            return Ok(results);
+        }
+
         [Authorize(Roles = "Participant")]
         [HttpGet]
         [Route("auth/profile/results")]
         public IActionResult GetResults()//this api gets users aprticipation results
         {
-            List<ParticipantResults> results = new List<ParticipantResults>();
+            List<ParticipantResultsResponse> results = new List<ParticipantResultsResponse>();
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
-            string query = $"SELECT PR.PRID, PR.ParticipantID, PR.EventID, PR.Placement, PR.Time FROM ParticipantResults AS PR " +
-                $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " + //this query tells the database to retrieve this specific data 
-                $"INNER JOIN Event ON Event.EventID = PR.EventID " +
-                $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
-                $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
+            string query = "SELECT Event.EventName, Event.Date, Category.CategoryName, PR.Time, PR.Placement FROM ParticipantResults AS PR " +
+            "INNER JOIN Event " +
+            "ON Event.EventID = PR.EventID " +
+            "INNER JOIN Signup " +
+            "ON Signup.ParticipantID = PR.ParticipantID AND Signup.EventID = PR.EventID " +
+            "INNER JOIN Category " +
+            "ON Category.CategoryID = Signup.CategoryID " +
+            "INNER JOIN Participant " +
+            "ON Participant.ParticipantID = PR.ParticipantID " +
+            "INNER JOIN Users " +
+            "ON Users.UserID = Participant.UserID " +
+            $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value} "+
+            "ORDER BY Event.Date DESC";
             using SqlDataAdapter adp = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    ParticipantResults result = new();
-                    result.PRID = Convert.ToInt32(dt.Rows[i]["PRID"]);
-                    result.ParticipantID = Convert.ToInt32(dt.Rows[i]["ParticipantID"]);
-                    result.EventID = Convert.ToInt32(dt.Rows[i]["EventID"]);
-                    result.Placement = Convert.ToInt32(dt.Rows[i]["Placement"]);
-                    result.Time = (TimeSpan)dt.Rows[i]["Time"];
+                    ParticipantResultsResponse result = new();
+                    result.EventName = dt.Rows[i]["EventName"].ToString();
+                    result.Date = (DateTime)dt.Rows[i]["Date"];
+                    result.Category = dt.Rows[i]["CategoryName"].ToString();
+                    result.Time = (TimeSpan)(dt.Rows[i]["Time"]);
+                    result.Placement = (int)dt.Rows[i]["Placement"];
                 
                     results.Add(result);
                 }
