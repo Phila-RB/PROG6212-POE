@@ -6,6 +6,14 @@ Name VARCHAR(30) NOT NULL,
 Surname VARCHAR(30) NOT NULL,
 Access VARCHAR(30) NOT NULL CHECK (Access IN ('Organiser', 'Participant')),
 Password VARCHAR(100) NOT NULL
+<<<<<<< HEAD
+=======
+);
+
+CREATE TABLE Category(
+CategoryID INT IDENTITY(1,1)  NOT NULL PRIMARY KEY,
+CategoryName VARCHAR(30) NOT NULL,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
 );
 
 CREATE TABLE Event(
@@ -69,5 +77,9 @@ INSERT INTO Signup (EventID, ParticipantID, CategoryID) VALUES
 INSERT INTO ParticipantResults (ParticipantID, EventID, Placement, Time) VALUES 
 (1, 1, 1, '03:42:18'), (2, 1, 2, '04:05:32'), 
 (1, 2, 2, '02:15:45'), (2, 2, 1, '02:08:21'),
+<<<<<<< HEAD
 (1, 3, 1, '00:52:14'), (2, 3, 2, '00:55:37'),
 (3, 3, 10, '03:42:18'), (3, 2, 4, '04:05:32');
+=======
+(1, 3, 1, '00:52:14'), (2, 3, 2, '00:55:37');
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d

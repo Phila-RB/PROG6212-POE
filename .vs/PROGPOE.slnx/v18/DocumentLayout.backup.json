@@ -3,14 +3,55 @@
   "WorkspaceRootPath": "C:\\Users\\phila\\source\\repos\\ProgPoe\\",
   "Documents": [
     {
+<<<<<<< HEAD
+=======
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
       "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+=======
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\participantresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\participantresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\signup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\signup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
       "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+=======
+      "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\data\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\data\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
       "AbsoluteMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|c:\\users\\phila\\source\\repos\\progpoe\\progpoe\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{AA77A8AF-4F79-18DD-5E9B-DE5E8F867568}|PROGPOE\\PROGPOE.csproj|solutionrelative:progpoe\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -58,7 +99,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 308,
+<<<<<<< HEAD
           "SelectedChildIndex": 9,
+=======
+          "SelectedChildIndex": 10,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,7 +115,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 9,
+=======
+              "DocumentIndex": 6,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "ParticipantResults.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\ParticipantResults.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\ParticipantResults.cs",
@@ -82,7 +131,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 10,
+=======
+              "DocumentIndex": 7,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "Signup.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Signup.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\Signup.cs",
@@ -94,20 +147,32 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 1,
+=======
+              "DocumentIndex": 8,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\User.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\User.cs",
               "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\User.cs",
               "RelativeToolTip": "PROGPOE\\Models\\User.cs",
+<<<<<<< HEAD
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+=======
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-12T14:25:58.897Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 11,
+=======
+              "DocumentIndex": 9,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "Data.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Data\\Data.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Data\\Data.cs",
@@ -115,11 +180,20 @@
               "RelativeToolTip": "PROGPOE\\Data\\Data.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2026-10-16T18:36:30.642Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+=======
+              "WhenOpened": "2026-10-16T18:36:30.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "Participant.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Participant.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\Participant.cs",
@@ -127,11 +201,20 @@
               "RelativeToolTip": "PROGPOE\\Models\\Participant.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2026-10-12T15:01:27.38Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+=======
+              "WhenOpened": "2026-10-12T15:01:27.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "Event.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Event.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Models\\Event.cs",
@@ -168,19 +251,57 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 5,
+=======
+              "DocumentIndex": 4,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "PROGPOE\\Models\\Category.cs",
+              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Models\\Category.cs",
+              "RelativeToolTip": "PROGPOE\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-12T14:57:31.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "PROGPOE\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Controllers\\UserController.cs",
+              "RelativeToolTip": "PROGPOE\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAcwMIAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T09:39:13.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Program.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Program.cs",
               "ToolTip": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Program.cs",
               "RelativeToolTip": "PROGPOE\\Program.cs",
+<<<<<<< HEAD
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA1AAAAAAAAAA==",
+=======
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-13T09:53:30.565Z"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 6,
+=======
+              "DocumentIndex": 1,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "EventController.cs",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Controllers\\EventController.cs",
               "RelativeDocumentMoniker": "PROGPOE\\Controllers\\EventController.cs",
@@ -188,11 +309,20 @@
               "RelativeToolTip": "PROGPOE\\Controllers\\EventController.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAYwPoAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2026-10-16T12:04:07.92Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+=======
+              "WhenOpened": "2026-10-16T12:04:07.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "PROGPOE\\Properties\\launchSettings.json",
@@ -204,7 +334,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 3,
+=======
+              "DocumentIndex": 11,
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\phila\\source\\repos\\ProgPoe\\PROGPOE\\appsettings.json",
               "RelativeDocumentMoniker": "PROGPOE\\appsettings.json",

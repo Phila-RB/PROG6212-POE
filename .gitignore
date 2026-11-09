@@ -1,0 +1,12 @@
+# .NET build files
+**/bin/
+**/obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.cache
+
+# NuGet
+*.nupkg

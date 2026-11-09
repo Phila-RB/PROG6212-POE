@@ -110,8 +110,13 @@ namespace PROGPOE.Controllers
                 //}
                
                 // 2. Create user identity claims
+<<<<<<< HEAD
                 var claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, user.Name), new Claim(ClaimTypes.Surname, user.Surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
                 //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+=======
+                var claims = new List<Claim> { new Claim(ClaimTypes.Sid, dt.Rows[0]["UserID"].ToString()), new Claim(ClaimTypes.Name, name), new Claim(ClaimTypes.Surname, surname), new Claim(ClaimTypes.Role, dt.Rows[0]["Access"].ToString())};
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
 
                 //// 3. Issue the session cookie
                 //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
@@ -171,6 +176,14 @@ namespace PROGPOE.Controllers
             string access = (string.IsNullOrEmpty(userUpd.Access)) ? HttpContext.User.FindFirst(ClaimTypes.Role)?.Value : userUpd.Access;
             string password = (string.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
 
+<<<<<<< HEAD
+=======
+            string name = (String.IsNullOrEmpty(userUpd.Name))? HttpContext.User.FindFirst(ClaimTypes.Name)?.Value : userUpd.Name;
+            string surname = (String.IsNullOrEmpty(userUpd.Surname)) ? HttpContext.User.FindFirst(ClaimTypes.Surname)?.Value : userUpd.Surname;
+            string access = (String.IsNullOrEmpty(userUpd.Access)) ? HttpContext.User.FindFirst(ClaimTypes.Role)?.Value : userUpd.Access;
+            string password = (String.IsNullOrEmpty(userUpd.Password)) ? dt.Rows[0]["Password"].ToString() : userUpd.Password;
+
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
             cmd.Parameters.AddWithValue("@ID", HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
             cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@Surname", surname);
@@ -215,7 +228,11 @@ namespace PROGPOE.Controllers
 
             cmd.Parameters.AddWithValue("@EventID", signup.EventID);
             cmd.Parameters.AddWithValue("@ParticipantID", dt.Rows[0]["ParticipantID"]);
+<<<<<<< HEAD
             cmd.Parameters.AddWithValue("@CategoryID", signup.CategoryID);
+=======
+            cmd.Parameters.AddWithValue("@CategoryID", id);
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
 
             con.Open();
             int rowsAffected = cmd.ExecuteNonQuery();
@@ -262,6 +279,7 @@ namespace PROGPOE.Controllers
         {
             List<ParticipantResultsResponse> results = new List<ParticipantResultsResponse>();
             SqlConnection con = new SqlConnection(_config.GetConnectionString("RaceDayCon").ToString());
+<<<<<<< HEAD
             string query = "SELECT Event.EventName, Event.Date, Category.CategoryName, PR.Time, PR.Placement FROM ParticipantResults AS PR " +
             "INNER JOIN Event " +
             "ON Event.EventID = PR.EventID " +
@@ -275,6 +293,13 @@ namespace PROGPOE.Controllers
             "ON Users.UserID = Participant.UserID " +
             $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value} "+
             "ORDER BY Event.Date DESC";
+=======
+            string query = $"SELECT PR.PRID, PR.ParticipantID, PR.EventID, PR.Placement, PR.Time FROM ParticipantResults AS PR " +
+                $"INNER JOIN Participant ON PR.ParticipantID = Participant.ParticipantID " + //this query tells the database to retrieve this specific data 
+                $"INNER JOIN Event ON Event.EventID = PR.EventID " +
+                $"INNER JOIN Users ON Users.UserID = Participant.UserID " +
+                $"WHERE Users.UserID = {HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value}";
+>>>>>>> 549c746d102548e62eebefb2ff95bc5cb842d85d
             using SqlDataAdapter adp = new SqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adp.Fill(dt);
